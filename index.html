@@ -14,6 +14,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
     <link rel="stylesheet" href="stil.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+
     <title>CV</title>
   </head>
 
@@ -283,24 +289,35 @@
                 </div>
               </div>
 
-
               <div class="col-12">
                 <button class="btn btn-primary" type="submit">Posalji</button>
               </div>
             </form>
-            
-              <div id="prikaz" class="alert alert-primary d-none mt-3" role="alert"></div>
 
+            <div
+              id="prikaz"
+              class="alert alert-primary d-none mt-3"
+              role="alert"
+            ></div>
           </div>
         </div>
       </div>
+
+        <div class="container d-flex justify-content-around mb-5">
+          <div class="slider">
+            <div>your content</div>
+            <div>your content</div>
+          </div>
+        </div>
     </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("forma");
 
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", async function (e) {
           e.preventDefault();
           e.stopPropagation();
 
@@ -321,36 +338,53 @@
           };
           console.log(data);
 
-          form.classList.add("d-none");
+          try {
+            const response = await fetch("https://httpbin.org/post", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
 
-          const prikaz = document.getElementById("prikaz");
-          prikaz.classList.remove("d-none");
-          prikaz.innerHTML =
-            "<h4>Uspesno ste poslali formu!</h4>" +
-            "<p><strong>Ime:</strong> " +
-            data.ime +
-            "</p>" +
-            "<p><strong>Prezime:</strong> " +
-            data.prezime +
-            "</p>" +
-            "<p><strong>Pol:</strong> " +
-            data.pol +
-            "</p>" +
-            "<p><strong>Godina rodjenja:</strong> " +
-            data.godinaRodjenja +
-            "</p>" +
-            "<p><strong>Grad:</strong> " +
-            data.grad +
-            "</p>" +
-            "<p><strong>Adresa:</strong> " +
-            data.adresa +
-            "</p>";
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
 
-          alert("Forma je uspesno validirana.");
-          form.reset();
-          form.classList.remove("was-validated");
+            form.classList.add("d-none");
 
-          
+            const prikaz = document.getElementById("prikaz");
+            prikaz.classList.remove("d-none");
+            prikaz.innerHTML =
+              "<h4>Uspesno ste popunili formu!</h4>" +
+              "<p><strong>Ime:</strong> " +
+              data.ime +
+              "</p>" +
+              "<p><strong>Prezime:</strong> " +
+              data.prezime +
+              "</p>" +
+              "<p><strong>Pol:</strong> " +
+              data.pol +
+              "</p>" +
+              "<p><strong>Godina rodjenja:</strong> " +
+              data.godinaRodjenja +
+              "</p>" +
+              "<p><strong>Grad:</strong> " +
+              data.grad +
+              "</p>" +
+              "<p><strong>Adresa:</strong> " +
+              data.adresa +
+              "</p>";
+
+            form.classList.remove("was-validated");
+
+            console.log("Data successfully sent to the server");
+          } catch (error) {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          }
         });
       });
     </script>
