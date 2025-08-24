@@ -23,7 +23,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
     />
-
     <title>CV</title>
   </head>
 
@@ -42,7 +41,7 @@
               style="width: 200px; border-width: 3px; border-style: solid"
             />
           </div>
-          <div class="col-6">
+          <div class="col-6 text-start" style="padding-left: 200px">
             <strong style="font-size: 32px; color: #ebebeb"
               >Nebojša <br />
               Maričić</strong
@@ -205,9 +204,12 @@
                   id="ime"
                   name="firstName"
                   placeholder="Unesite ime..."
+                  pattern="^[A-ZČĆŽŠĐ][a-zčćžšđ]+$"
                   required
                 />
-                <div class="invalid-feedback">Niste uneli ime</div>
+                <div class="invalid-feedback">
+                  Ime mora poceti velikim slovom
+                </div>
               </div>
 
               <div class="col-md-6">
@@ -218,15 +220,18 @@
                   id="prezime"
                   name="prezime"
                   placeholder="Unesite prezime..."
+                  pattern="^[A-ZČĆŽŠĐ][a-zčćžšđ]+$"
                   required
                 />
-                <div class="invalid-feedback">Niste uneli prezime</div>
+                <div class="invalid-feedback">
+                  Prezime mora poceti velikim slovom
+                </div>
               </div>
 
               <div class="col-md-6">
                 <label for="pol" class="form-label">Pol</label>
                 <select id="pol" class="form-select" required>
-                  <option value="" selected disabled>Izaberit pol...</option>
+                  <option value="" selected disabled>Izaberite pol...</option>
                   <option>Muski</option>
                   <option>Zenski</option>
                 </select>
@@ -242,12 +247,14 @@
                   class="form-control"
                   id="godinaRodjenja"
                   name="godinaRodjenja"
-                  min="1930"
+                  min="1920"
                   max="2025"
                   step="1"
                   required
                 />
-                <div class="invalid-feedback">Niste uneli godinu</div>
+                <div class="invalid-feedback">
+                  Niste uneli godinu, godina mora biti u opsegu (1920-2025)
+                </div>
               </div>
 
               <div class="col-md-6">
@@ -258,9 +265,10 @@
                   id="grad"
                   name="grad"
                   placeholder="Unesite grad..."
+                  pattern="^[A-ZČĆŽŠĐ][a-zčćžšđ]+(?:\s[A-ZČĆŽŠĐ][a-zčćžšđ]+)*$"
                   required
                 />
-                <div class="invalid-feedback">Niste uneli grad</div>
+                <div class="invalid-feedback">Grad mora poceti velikim slovom</div>
               </div>
 
               <div class="col-md-6">
@@ -268,14 +276,14 @@
                 <textarea
                   id="adresa"
                   class="form-control"
-                  rows="2"
+                  rows="3"
                   required
                   minlength="5"
                 ></textarea>
-                <div class="invalid-feedback">Niste uneli adresu</div>
+                <div class="invalid-feedback">Sadrzaj za adresu mora sadrzati najmanje 5 karaktera</div>
               </div>
 
-              <div class="col-6">
+              <div class="col-12">
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -310,22 +318,13 @@
       <div class="container mb-5">
         <div class="slider">
           <div class="slide">
-            <img
-              src="src/s1.jpg"
-              alt="..."
-            />
+            <img src="src/s1.jpg" alt="Slajder slika 1" />
           </div>
           <div class="slide">
-            <img
-              src="src/s2.jpg"
-              alt="..."
-            />
+            <img src="src/s2.jpg" alt="Slajder slika 2" />
           </div>
           <div class="slide">
-            <img
-              src="src/s3.jpg"
-              alt="..."
-            />
+            <img src="src/s3.jpg" alt="Slajder slika 3" />
           </div>
         </div>
       </div>
@@ -343,6 +342,7 @@
           e.stopPropagation();
 
           const valid = form.checkValidity();
+
           form.classList.add("was-validated");
 
           if (!valid) {
@@ -369,7 +369,7 @@
             });
 
             if (!response.ok) {
-              throw new Error("Network response was not ok");
+              throw new Error("Error: " + response.statusText);
             }
 
             form.classList.add("d-none");
@@ -401,10 +401,7 @@
 
             console.log("Data successfully sent to the server");
           } catch (error) {
-            console.error(
-              "There was a problem with the fetch operation:",
-              error
-            );
+            console.error(error);
           }
         });
 
@@ -413,7 +410,6 @@
             slidesToShow: 1,
             slidesToScroll: 1,
             dots: true,
-            arrows: true,
             infinite: true,
             speed: 500,
             autoplay: true,
