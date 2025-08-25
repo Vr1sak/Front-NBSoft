@@ -41,7 +41,7 @@
               style="width: 200px; border-width: 3px; border-style: solid"
             />
           </div>
-          <div class="col-6 text-start" style="padding-left: 200px">
+          <div class="col-6 text-start ps-md-5">
             <strong style="font-size: 32px; color: #ebebeb"
               >Nebojša <br />
               Maričić</strong
@@ -268,7 +268,9 @@
                   pattern="^[A-ZČĆŽŠĐ][a-zčćžšđ]+(?:\s[A-ZČĆŽŠĐ][a-zčćžšđ]+)*$"
                   required
                 />
-                <div class="invalid-feedback">Grad mora poceti velikim slovom</div>
+                <div class="invalid-feedback">
+                  Grad mora poceti velikim slovom
+                </div>
               </div>
 
               <div class="col-md-6">
@@ -280,7 +282,9 @@
                   required
                   minlength="5"
                 ></textarea>
-                <div class="invalid-feedback">Sadrzaj za adresu mora sadrzati najmanje 5 karaktera</div>
+                <div class="invalid-feedback">
+                  Sadrzaj za adresu mora sadrzati najmanje 5 karaktera
+                </div>
               </div>
 
               <div class="col-12">
@@ -405,16 +409,14 @@
           }
         });
 
-        $(function () {
-          $(".slider").slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            dots: true,
-            infinite: true,
-            speed: 500,
-            autoplay: true,
-            autoplaySpeed: 2000,
-          });
+        $(".slider").slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          infinite: true,
+          speed: 500,
+          autoplay: true,
+          autoplaySpeed: 2000,
         });
       });
     </script>
